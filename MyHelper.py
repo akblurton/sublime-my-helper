@@ -60,20 +60,16 @@ class HelpMeCommand(sublime_plugin.TextCommand):
 
 		# Load our settings file now
 		settings = sublime.load_settings('MyHelper.sublime-settings')
-		search_engine = settings.get('search_engine', 'https://google.com/search?q=')
+		search_engine = settings.get('help_all', 'https://google.com/search?q=')
+
 		
+
 		# Find any defined parsers
-		parsers = settings.get('parsers', [])
-		use_parser = False
-		if len(parsers) and isinstance(parsers, dict):
-			url = self.find_parser(parsers, scope)
+		url = self.find_parser(settings, scope, [])
 
 		##Use our search engine instead
-		if not url:
+		if not url or url is -1:
 			url = search_engine
-
-		# Add our search engine query if $SEARCH$ is found
-		url = url.replace('$SEARCH$', search_engine)
 
 		# Make sure we have a protocol infront of our URL, and default to http if not
 		if not re.match(r'[A-Za-z]+:\/\/', url):
@@ -89,21 +85,32 @@ class HelpMeCommand(sublime_plugin.TextCommand):
 
 	# Method to recursively find a parser for the given syntax
 	def find_parser(self, parsers, syntax, checked = []):
-		if(syntax not in parsers):
+		# If we've already been to the syntax this parser points to,
+		# we'll head in a circual direction: exit now
+		if syntax in checked:
+			return -1
+
+		if not parsers.has("help_" + syntax):
 			return False
 
 		# Keep track of what we've checked already to prevent any infinite recursion
 		checked.append(syntax)
 		# Get the parser from our settings
-		p = parsers.get(syntax)
+		p = parsers.get("help_" + syntax)
+
 		# Check if the result is actually a reference to another syntax's parser
-		if p in parsers:
-			# If we've already been to the syntax this parser points to,
-			# we'll head in a circual direction: exit now
-			if p in checked:
-				return False
+		if parsers.has("help_" + p):
 			return self.find_parser(parsers, p, checked)
 
+		# Check for includes
+		includes = re.search(r'{([A-Za-z]+)}', p);
+
+		if includes:
+			replaceWith = self.find_parser(parsers, includes.group(1), checked)
+			## Return -1 on circular reference
+			if replaceWith is -1:
+				return -1
+			p = p.replace('{' + includes.group(1) + '}', '' if not replaceWith else replaceWith)
 		return p
 
 

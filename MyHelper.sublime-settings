@@ -1,6 +1,4 @@
 {
-	"search_engine" : "https://google.com/search?q=",
-	"parsers" : {
-		"python" : "$SEARCH$python+"
-	}
-}
+	"help_all" : "https://google.com/search?q=",
+	"help_python" : "{all}python+" 
+}  
