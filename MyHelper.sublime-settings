@@ -2,10 +2,10 @@
 	"help_all" : "https://google.com/search?q=",
 	"help_python" : "{all}python+",
 	"help_java" : "http://search.oracle.com/search/search?search_p_main_operator=all&group=Documentation&q=$$+url:/javase&searchField=Timer&docsets=",
-	"help_php" : "http://php.net/$$",
+	"help_php" : "http://php.net/",
 	"help_less" : "css",
-	"help_js" : "https://developer.mozilla.org/en-US/search?q=$$+javascript",
-	"help_css" : "https://developer.mozilla.org/en-US/search?q=$$+css",
-	"help_html" : "https://developer.mozilla.org/en-US/search?q=$$+html",
-	"help_plain": "http://answers.com/$$"
+	"help_js" : "https://developer.mozilla.org/en-US/search?q=javascript+",
+	"help_css" : "https://developer.mozilla.org/en-US/search?q=css+",
+	"help_html" : "https://developer.mozilla.org/en-US/search?q=html+",
+	"help_plain": "http://answers.com/"
 }  
