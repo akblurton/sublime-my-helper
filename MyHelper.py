@@ -21,9 +21,14 @@ class HelpMeCommand(sublime_plugin.TextCommand):
 			# Find the scope of the current selection
 			selection_scope = '';
 			view_scope = self.view.scope_name(select.begin())
-			matches = re.match(scope_regex, view_scope)
+			matches = re.search(scope_regex, view_scope)
+			#If a source. scope attribute isn't found, try text.
+			text_matches = re.search(r'text\.(\w+)', view_scope)
+			
 			if matches:
 				selection_scope = matches.group(1)
+			elif text_matches:
+				selection_scope = text_matches.group(1)
 			else:
 				selection_scope = 'None'
 
