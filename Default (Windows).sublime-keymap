@@ -1,0 +1,6 @@
+[
+	{
+		"keys" : ["alt+f1"],
+		"command" : "help_me"
+	}	
+]
