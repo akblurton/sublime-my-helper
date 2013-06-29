@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, urllib.parse, re, pprint, webbrowser
+import sublime, sublime_plugin, urllib.parse, re, webbrowser
 
 class HelpMeCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
