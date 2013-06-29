@@ -1,0 +1,6 @@
+{
+	"search_engine" : "https://google.com/search?q=",
+	"parsers" : {
+		"python" : "$SEARCH$python+"
+	}
+}
